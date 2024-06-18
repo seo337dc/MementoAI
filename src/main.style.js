@@ -13,11 +13,11 @@ export const Column = styled.div`
   padding: 20px;
   border-radius: 12px;
   background-color: ${(props) => {
-    if (props.isDraggingOver && !props.isBan) {
+    if (props.$isDraggingOver && !props.$isBan) {
       return 'lightblue';
     }
 
-    if (props.isDraggingOver && props.isBan) {
+    if (props.$isDraggingOver && props.$isBan) {
       return 'red';
     }
 

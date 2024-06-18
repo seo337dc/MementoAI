@@ -41,10 +41,11 @@ function App() {
 
       if (!moveItem) return;
 
-      const targetItem = endColumn.itemsList[destination.index - 1];
-
       // 3-2. 짝수 아이템은 다른 짝수 아이템 앞으로 이동할 수 없다.
-      const isCheckEven = checkEven(moveItem, targetItem);
+      const moveItemIdx = startColumn.itemsList.findIndex(
+        (item) => item.id === result.draggableId
+      );
+      const isCheckEven = checkEven(moveItemIdx + 1, destination.index);
       if (!isCheckEven) return;
 
       if (startColumn.columnId === endColumn.columnId) {
@@ -151,15 +152,12 @@ function App() {
         return;
       }
 
-      const moveItem = startColumn.itemsList.find(
+      const moveItemIdx = startColumn.itemsList.findIndex(
         (item) => item.id === draggableId
       );
 
-      if (!moveItem) return;
-
-      const targetItem = endColumn.itemsList[destination.index - 1];
-
-      const isCheckEven = checkEven(moveItem, targetItem);
+      // 3-2. 짝수 아이템은 다른 짝수 아이템 앞으로 이동할 수 없다.
+      const isCheckEven = checkEven(moveItemIdx + 1, destination.index);
 
       if (!isCheckEven) {
         setIsBan(true);
@@ -215,8 +213,8 @@ function App() {
               <S.Column
                 ref={provided.innerRef}
                 {...provided.droppableProps}
-                isDraggingOver={snapshot.isDraggingOver}
-                isBan={isBan}
+                $isDraggingOver={snapshot.isDraggingOver}
+                $isBan={isBan}
               >
                 <h2>{columnInfo.title}</h2>
                 {columnInfo.itemsList.map((item, index) => (
